@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    gcp:
+      core:
+        enabled: true
+      pubsub:
+        enabled: true
+      project-id: timoxino
