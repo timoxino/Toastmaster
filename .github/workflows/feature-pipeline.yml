@@ -25,5 +25,12 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Google Auth
+      id: auth
+      uses: 'google-github-actions/auth@v0'
+      with:
+        token_format: 'access_token'
+        workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
+        service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}'
     - name: Build and Test
       run: mvn -B package --file pom.xml
