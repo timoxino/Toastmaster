@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    gcp:
+      core:
+        enabled: false
+      pubsub:
+        enabled: false
+server:
+  error:
+    include-message: always
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
