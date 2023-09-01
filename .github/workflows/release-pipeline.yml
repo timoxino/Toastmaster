@@ -61,8 +61,13 @@ jobs:
           service: ${{ env.SERVICE }}
           region: ${{ env.REGION }}
           image: ${{ env.GAR_LOCATION }}/${{ env.PROJECT_ID }}/${{ env.APPLICATION }}/${{ env.SERVICE }}
+          secrets: |
+            spring.mail.username=toastmaster-spring-mail-username:latest
+            spring.mail.password=toastmaster-spring-mail-password:latest
+            toastmaster.email.from=toastmaster-email-from:latest
+            toastmaster.email.to=toastmaster-email-to:latest
           env_vars: |
-            SPRING_PROFILES_ACTIVE=cloudrun
+            spring.profiles.active=cloudrun
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
