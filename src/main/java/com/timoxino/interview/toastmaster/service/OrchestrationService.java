@@ -11,10 +11,10 @@ public class OrchestrationService {
 
     final static String SUBJECT_QUESTIONS_READY = "Questions are ready!";
 
-    @Value("${TOASTMASTER_EMAIL_FROM}")
+    @Value("${toastmaster.email.from}")
     String from;
 
-    @Value("${TOASTMASTER_EMAIL_TO}")
+    @Value("${toastmaster.email.to}")
     String to;
 
     @Autowired
