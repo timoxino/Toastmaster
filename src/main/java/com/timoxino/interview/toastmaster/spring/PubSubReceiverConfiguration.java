@@ -2,6 +2,7 @@ package com.timoxino.interview.toastmaster.spring;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,12 +20,16 @@ import com.google.cloud.spring.pubsub.support.GcpPubSubHeaders;
 import com.google.cloud.spring.pubsub.support.converter.JacksonPubSubMessageConverter;
 import com.timoxino.interview.shared.dto.CandidateQuestionsMessage;
 import com.timoxino.interview.toastmaster.annotation.GcpCloudRun;
+import com.timoxino.interview.toastmaster.service.OrchestrationService;
 
 @Configuration
 @GcpCloudRun
 public class PubSubReceiverConfiguration {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(PubSubReceiverConfiguration.class);
+
+    @Autowired
+    OrchestrationService orchestrationService;
 
     @Bean
     public JacksonPubSubMessageConverter jacksonPubSubMessageConverter(ObjectMapper objectMapper) {
@@ -65,7 +70,8 @@ public class PubSubReceiverConfiguration {
     public void messageReceiver(
             CandidateQuestionsMessage payload,
             @Header(GcpPubSubHeaders.ORIGINAL_MESSAGE) BasicAcknowledgeablePubsubMessage message) {
-        LOGGER.warn("Message arrived from 'compiled_questions_topic'. Payload: " + payload.toString());
+        LOGGER.info("Message arrived from 'compiled_questions_topic'. Payload: " + payload.toString());
+        orchestrationService.processQuestionsMessage(payload);
         message.ack();
     }
 }
