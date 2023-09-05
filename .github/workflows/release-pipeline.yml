@@ -68,6 +68,7 @@ jobs:
             toastmaster.email.to=toastmaster-email-to:latest
           env_vars: |
             spring.profiles.active=cloudrun
+          flags: '--min-instances=1 --max-instances=1'
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
