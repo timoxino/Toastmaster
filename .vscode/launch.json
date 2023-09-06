@@ -10,7 +10,7 @@
             "request": "launch",
             "mainClass": "${file}",
             "env": {
-                "SPRING_PROFILES_ACTIVE": "local"
+                "spring.profiles.active": "local"
             }
         }
     ]
