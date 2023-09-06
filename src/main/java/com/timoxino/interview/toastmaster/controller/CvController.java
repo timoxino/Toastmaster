@@ -1,9 +1,11 @@
 package com.timoxino.interview.toastmaster.controller;
 
 import java.io.IOException;
+import java.io.OutputStream;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.WritableResource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,11 @@ public class CvController {
 
     @PostMapping
     public CvProcessingResponse submitCvProcessing(CvProcessingRequest request) throws IOException {
-        return CvProcessingResponse.builder().caseNumber(cvBucket.getURI().toString()).build();
+
+        Resource file = cvBucket.createRelative("/testFile.txt");
+        try (OutputStream os = ((WritableResource) file).getOutputStream()) {
+            os.write(request.getCvContent().getBytes());
+        }
+        return CvProcessingResponse.builder().caseNumber("file written").build();
     }
 }
