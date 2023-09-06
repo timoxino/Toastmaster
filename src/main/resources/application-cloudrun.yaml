@@ -5,4 +5,6 @@ spring:
         enabled: true
       pubsub:
         enabled: true
+      storage:
+        enabled: true
       project-id: timoxino
