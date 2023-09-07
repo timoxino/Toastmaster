@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 @Builder
 public class CvProcessingResponse {
-    private String caseNumber;
+    private String cvFileName;
 }
