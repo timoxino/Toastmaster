@@ -27,8 +27,9 @@ public class OrchestrationService {
     @Autowired
     StorageService storageService;
 
-    public OrchestrationService(EmailService emailService) {
+    public OrchestrationService(EmailService emailService, StorageService storageService) {
         this.emailService = emailService;
+        this.storageService = storageService;
     }
 
     public void processQuestionsMessage(CandidateQuestionsMessage message) {
