@@ -45,7 +45,7 @@ public class OrchestrationService {
 
     public void processQuestionsMessage(CandidateQuestionsMessage message) {
         emailService.sendEmail(from, to, SUBJECT_QUESTIONS_READY, "questions");
-        LOGGER.info("Email sent with the questions compiled for CV file: " + message.getCvUri());
+        LOGGER.info("Email sent with the questions compiled for CV file: {}", message != null ? message.getCvUri() : "unknown");
     }
 
     public String processCvRequest(CvProcessingRequest request) throws IOException {
@@ -53,14 +53,14 @@ public class OrchestrationService {
 
         String fileName = UUID.randomUUID().toString() + ".txt";
         storageService.writeCvFile(fileName, request.getCvContent());
-        LOGGER.info("File for CV created with the name: " + fileName);
+        LOGGER.info("File for CV created with the name: {}", fileName);
 
         CandidateBaseMessage message = new CandidateBaseMessage();
         message.setCvUri(fileName);
         message.setLvlExpected(request.getLevelExpected());
         message.setRole(request.getRoleName());
         pubSubCvGateway.sendCvToPubSub(message);
-        LOGGER.info("Message to PubSub sent with CV file name: " + fileName);
+        LOGGER.info("Message to PubSub sent with CV file name: {}", fileName);
 
         return fileName;
     }

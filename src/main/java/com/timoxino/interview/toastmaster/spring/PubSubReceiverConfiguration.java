@@ -70,7 +70,7 @@ public class PubSubReceiverConfiguration {
     public void messageReceiver(
             CandidateQuestionsMessage payload,
             @Header(GcpPubSubHeaders.ORIGINAL_MESSAGE) BasicAcknowledgeablePubsubMessage message) {
-        LOGGER.info("Message arrived from 'compiled_questions_topic'. Payload: " + payload.toString());
+        LOGGER.info("Message arrived from 'compiled_questions_topic'. Payload: {}", payload.toString());
         orchestrationService.processQuestionsMessage(payload);
         message.ack();
     }
