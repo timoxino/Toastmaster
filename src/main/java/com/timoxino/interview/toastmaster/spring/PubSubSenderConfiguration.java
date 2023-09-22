@@ -24,7 +24,7 @@ public class PubSubSenderConfiguration {
     @Bean
     @ServiceActivator(inputChannel = "pubSubOutputChannel")
     public MessageHandler messageSender(PubSubTemplate pubsubTemplate) {
-        return new PubSubMessageHandler(pubsubTemplate, "cv_pending_topic");
+        return new PubSubMessageHandler(pubsubTemplate, "pending_cv_topic");
     }
 
     @MessagingGateway(defaultRequestChannel = "pubSubOutputChannel")
