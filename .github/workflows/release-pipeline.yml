@@ -41,6 +41,25 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Pre-construct Terraform Init
+        working-directory: ./terraform/module-pre-construct
+        run: terraform init
+
+      - name: Pre-construct Terraform Plan
+        working-directory: ./terraform/module-pre-construct
+        run: terraform plan
+
+      - name: Pre-construct Terraform Destroy
+        working-directory: ./terraform/module-pre-construct
+        run: terraform destroy -auto-approve
+
+      - name: Pre-construct Terraform Apply
+        working-directory: ./terraform/module-pre-construct
+        run: terraform apply -auto-approve
+
       - name: Docker Auth
         id: docker-auth
         uses: 'docker/login-action@v1'
@@ -70,5 +89,18 @@ jobs:
             spring.profiles.active=cloudrun
           flags: '--min-instances=1 --max-instances=1'
 
-      - name: Show Output
-        run: echo ${{ steps.deploy.outputs.url }}
+      - name: Post-construct Terraform Init
+        working-directory: ./terraform/module-post-construct
+        run: terraform init
+  
+      - name: Post-construct Terraform Plan
+        working-directory: ./terraform/module-post-construct
+        run: terraform plan
+
+      - name: Post-construct Terraform Destroy
+        working-directory: ./terraform/module-post-construct
+        run: terraform destroy -auto-approve
+
+      - name: Post-construct Terraform Apply
+        working-directory: ./terraform/module-post-construct
+        run: terraform apply -auto-approve
