@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"gcs","Source":"../gcs-bucket","Dir":"../gcs-bucket"},{"Key":"pubsub","Source":"../pubsub-topic-subscription","Dir":"../pubsub-topic-subscription"},{"Key":"secrets","Source":"../secret-sa-binding","Dir":"../secret-sa-binding"}]}
