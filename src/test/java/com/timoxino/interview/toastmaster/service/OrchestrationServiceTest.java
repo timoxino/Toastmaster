@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.timoxino.interview.shared.dto.CandidateBaseMessage;
+import com.timoxino.interview.shared.dto.CandidateQuestionsMessage;
 import com.timoxino.interview.toastmaster.dto.CvProcessingRequest;
 import com.timoxino.interview.toastmaster.spring.PubSubSenderConfiguration.PubSubCvGateway;
 
@@ -44,9 +45,8 @@ public class OrchestrationServiceTest {
         orchestrationService.from = "from";
         orchestrationService.to = "to";
 
-        orchestrationService.processQuestionsMessage(null);
-
-        verify(emailService).sendEmail("from", "to", "Questions are ready!", "questions");
+        orchestrationService.processQuestionsMessage(new CandidateQuestionsMessage());
+        verify(emailService).sendEmail(eq("from"), eq("to"), eq("Questions are ready!"), anyString());
     }
 
     @Test
