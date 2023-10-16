@@ -48,7 +48,8 @@ public class OrchestrationService {
     public void processQuestionsMessage(CandidateQuestionsMessage message) {
         Multimap<String, Question> questionsMap = message.getQuestions();
         emailService.sendEmail(from, to, SUBJECT_QUESTIONS_READY, formatEmailBody(questionsMap));
-        LOGGER.info("Email sent with the questions compiled for CV file: {}", message != null ? message.getCvUri() : "unknown");
+        LOGGER.info("Email sent with the questions compiled for CV file: {}",
+                message != null ? message.getCvUri() : "unknown");
     }
 
     public String processCvRequest(CvProcessingRequest request) throws IOException {
@@ -70,9 +71,11 @@ public class OrchestrationService {
 
     private String formatEmailBody(Multimap<String, Question> questionsMap) {
         StringBuilder emailBody = new StringBuilder();
-        for (String key : questionsMap.keySet()) {
-            emailBody.append(key).append(": ");
-            emailBody.append(questionsMap.get(key)).append("\n");
+        if (questionsMap != null) {
+            for (String key : questionsMap.keySet()) {
+                emailBody.append(key).append(": ");
+                emailBody.append(questionsMap.get(key)).append("\n");
+            }
         }
         return emailBody.toString();
     }
