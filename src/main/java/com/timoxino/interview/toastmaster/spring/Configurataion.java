@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
+import com.google.cloud.spring.pubsub.support.converter.JacksonPubSubMessageConverter;
 import com.timoxino.interview.shared.dto.CandidateBaseMessage;
 import com.timoxino.interview.toastmaster.annotation.LocalProfile;
 import com.timoxino.interview.toastmaster.spring.PubSubSenderConfiguration.PubSubCvGateway;
@@ -13,10 +14,15 @@ import com.timoxino.interview.toastmaster.spring.PubSubSenderConfiguration.PubSu
 public class Configurataion {
 
     @Bean
-    public ObjectMapper customizeJacksonConfiguration() {
+    public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new GuavaModule());
         return objectMapper;
+    }
+
+    @Bean
+    public JacksonPubSubMessageConverter jacksonPubSubMessageConverter(ObjectMapper objectMapper) {
+        return new JacksonPubSubMessageConverter(objectMapper);
     }
 
     @LocalProfile
